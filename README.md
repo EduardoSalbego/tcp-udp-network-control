@@ -1,52 +1,54 @@
-# Trabalho Prático de Redes: Implementação de Controles TCP sobre UDP
+# Reliable Data Transport Protocol over UDP
 
-## Objetivo
+[![Python](https://img.shields.io/badge/Language-Python-blue)](https://www.python.org/)
+[![Network-Programming](https://img.shields.io/badge/Field-Networking-orange)](#)
 
-Este trabalho tem como objetivo aprofundar o conhecimento dos alunos sobre os controles implementados pelo protocolo TCP ao replicar funcionalidades similares em uma aplicação que utiliza o protocolo UDP. O foco será na implementação de controles de confiabilidade e ordenação de mensagens, além de realizar uma comparação de desempenho entre TCP, UDP e a nova versão do UDP desenvolvida pelos alunos.
+This project implements a custom transport layer protocol that brings **TCP-like reliability and control features** to the **UDP protocol**. Developed as a practical networking challenge, the goal was to simulate and ensure reliable data transfer in potentially lossy or congested network environments.
 
-## Descrição
+---
 
-Em trios, os alunos deverão desenvolver uma aplicação em que o protocolo UDP seja modificado para incluir funcionalidades presentes no TCP. Os controles a serem implementados incluem:
+## Key Features
 
-- Controle de Fluxo: Garantir que o receptor possa controlar o fluxo de dados recebidos.
-- Controle de Congestionamento: Implementar mecanismos para evitar a saturação da rede.
-- Garantia de Entrega: Assegurar que todas as mensagens sejam entregues, utilizando técnicas de retransmissão.
-- Ordenação de Mensagens: Garantir que as mensagens sejam entregues na ordem correta.
+To achieve reliability over a connectionless protocol (UDP), the following mechanisms were implemented:
 
-Você pode simular situações de congestionamento, situações de perdas, etc. Para isso, utilize métodos/funções simples com uma lógica que imita esse comportamento. Não precisa ser muito realista nesse ponto.
+* **Flow Control:** Ensures the receiver is not overwhelmed by data, managing the transmission rate based on the receiver's capacity.
+* **Congestion Control:** Algorithms designed to detect network saturation and adjust the data flow to prevent packet loss.
+* **Guaranteed Delivery:** Implemented retransmission logic (ARQ) to ensure that every packet reaches its destination despite network instability.
+* **Packet Ordering:** Sequence numbering to ensure that messages are delivered to the application layer in the correct order, regardless of their arrival sequence at the transport layer.
 
-Ao final, os alunos deverão nomear a nova versão do UDP com os controles implementados.
+---
 
-## Tarefas
+## Performance Analysis
 
-1. Pesquisa e Planejamento:
-   - Revisar os principais controles implementados pelo protocolo TCP.
-   - Planejar como implementar esses controles utilizando o protocolo UDP.
+A core part of this project involved benchmarking the custom protocol against standard TCP and UDP. We conducted a test transmitting **1,000 messages** to measure latency and overhead.
 
-2. Implementação:
-   - Desenvolver uma aplicação em nível de aplicação que implementa os controles descritos acima utilizando UDP.
-   - Documentar o código e as decisões de design adotadas.
+| Protocol | Characteristics | Performance Result |
+| :--- | :--- | :--- |
+| **Standard UDP** | Fast, unreliable, no overhead | **~2.4s** |
+| **Standard TCP** | Reliable, high overhead, kernel-level | **~4.2s** |
+| **Custom Protocol** | Reliable, application-level control | **~5.1s** |
 
-3. Teste de Desempenho:
-   - Enviar 1000 mensagens utilizando TCP, UDP e a nova versão do UDP desenvolvida.
-   - Medir e comparar o tempo de envio para cada protocolo.
+*Detailed results and comparative charts can be found in the project's presentation slides.*
 
-4. Relatório (formato de apresentação em slides, não precisa de um documento de texto):
-   - Descrever o processo de desenvolvimento e implementação dos controles TCP sobre UDP.
-   - Apresentar e discutir os resultados dos testes de desempenho.
-   - Comparar o desempenho entre TCP, UDP e a nova versão do UDP.
+---
 
-## Avaliação
+## Installation & Usage
 
-A avaliação será baseada nos seguintes critérios:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/EduardoSalbego/tcp-udp-network-control.git
+   cd tcp-udp-network-control
+   ```
+2. **Run the Server:**
+   ```bash
+   python server.py
+   ```
+3. **Run the Client:**
+   ```bash
+   python client.py
+   ```
 
-- Compreensão dos Controles TCP: Capacidade de demonstrar conhecimento sobre os principais controles do protocolo TCP.
-- Implementação Técnica: Qualidade e funcionalidade da implementação dos controles TCP sobre UDP.
-- Teste e Comparação de Desempenho: Precisão e clareza na medição e comparação do desempenho entre TCP, UDP e a nova versão do UDP.
-- Documentação e Relatório: Clareza e detalhamento da documentação e do relatório final que será apresentado no formato de slides.
+### Developed by
+**Eduardo Salbego** Software Engineering Student | 5th Semester @ UNIPAMPA
 
-## Entrega
-
-- Código-Fonte: Submeter o código-fonte da aplicação desenvolvida, incluindo comentários e documentação.
-O link do repositório do GitHub deve estar no último slide da apresentação.
-- Relatório e Apresentação: Submeter um relatório detalhado em formato de slides, em PDF, contendo as descrições, implementações, testes e comparações de desempenho.
+**Maria Rocha** Software Engineering Student | 5th Semester @ UNIPAMPA
